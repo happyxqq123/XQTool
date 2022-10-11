@@ -1,0 +1,54 @@
+package com.XQTool.mybatis.type;
+
+import java.sql.CallableStatement;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Date;
+
+/**
+ * @ClassName DateOnlyTypeHandler
+ * @Description TODO
+ * @Author admin
+ * @Date 2022/10/11 16:11
+ * @Version 1.0
+ **/
+public class DateOnlyTypeHandler extends BaseTypeHandler<Date> {
+
+    @Override
+    public void setNonNullParameter(PreparedStatement ps, int i, Date parameter, JdbcType jdbcType)
+            throws SQLException {
+        ps.setDate(i, new java.sql.Date(parameter.getTime()));
+    }
+
+    @Override
+    public Date getNullableResult(ResultSet rs, String columnName)
+            throws SQLException {
+        java.sql.Date sqlDate = rs.getDate(columnName);
+        if (sqlDate != null) {
+            return new Date(sqlDate.getTime());
+        }
+        return null;
+    }
+
+    @Override
+    public Date getNullableResult(ResultSet rs, int columnIndex)
+            throws SQLException {
+        java.sql.Date sqlDate = rs.getDate(columnIndex);
+        if (sqlDate != null) {
+            return new Date(sqlDate.getTime());
+        }
+        return null;
+    }
+
+    @Override
+    public Date getNullableResult(CallableStatement cs, int columnIndex)
+            throws SQLException {
+        java.sql.Date sqlDate = cs.getDate(columnIndex);
+        if (sqlDate != null) {
+            return new Date(sqlDate.getTime());
+        }
+        return null;
+    }
+
+}
