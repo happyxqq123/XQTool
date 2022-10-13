@@ -1,6 +1,9 @@
 package com.XQTool.mybatis.reflection;
 
+import com.XQTool.mybatis.exception.ReflectionException;
 import com.XQTool.mybatis.reflection.invoker.*;
+import com.XQTool.mybatis.reflection.property.PropertyNamer;
+import com.XQTool.mybatis.util.MapUtil;
 
 import java.lang.reflect.*;
 import java.text.MessageFormat;
@@ -44,9 +47,10 @@ public class Reflector {
     }
 
     private void addDefaultConstructor(Class<?> clazz) {
-        Constructor<?>[] constructors = clazz.getDeclaredConstructors();
-        Arrays.stream(constructors).filter(constructor -> constructor.getParameterTypes().length == 0)
-                .findAny().ifPresent(constructor -> this.defaultConstructor = constructor);
+        Constructor<?> [] constructors =  clazz.getDeclaredConstructors();
+       Arrays.stream(constructors).filter(constructor -> {
+            return constructor.getParameterTypes().length==0;
+        }).findAny().ifPresent(constructor -> {this.defaultConstructor = constructor;});
     }
 
     private void addGetMethods(Method[] methods) {
@@ -237,7 +241,7 @@ public class Reflector {
      * @param clazz The class
      * @return An array containing all methods in this class
      */
-    private Method[] getClassMethods(Class<?> clazz) {
+    public Method[] getClassMethods(Class<?> clazz) {
         Map<String, Method> uniqueMethods = new HashMap<>();
         Class<?> currentClass = clazz;
         while (currentClass != null && currentClass != Object.class) {

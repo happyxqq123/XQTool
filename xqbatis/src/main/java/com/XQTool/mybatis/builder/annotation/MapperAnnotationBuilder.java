@@ -103,6 +103,7 @@ public class MapperAnnotationBuilder extends BaseBuilder {
                              boolean readWrite,
                              boolean blocking,
                              Properties props){
+        return null;
 
     }
 
