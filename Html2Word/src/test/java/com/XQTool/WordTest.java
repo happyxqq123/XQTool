@@ -7,6 +7,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
+import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * @ClassName WordTest
@@ -33,6 +36,21 @@ public class WordTest {
 
             }
         }
+    }
+
+    @Test
+    public void testTimer() throws InterruptedException {
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                System.out.println("tttt");
+                System.out.println(Thread.currentThread().getName());
+            }
+        },0,1000);
+        System.out.println(Thread.currentThread().getName());
+        Thread.sleep(10000);
+        timer.cancel();
     }
 
 }
